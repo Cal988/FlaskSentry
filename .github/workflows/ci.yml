@@ -22,7 +22,7 @@ jobs:
 
     - name: Instalar dependencias y ejecutar tests (Proyecto A)
       run: |
-        cd FLASKPROYECTO/proyecto_a
+        cd proyecto_a
         pip install -r requirements.txt
         # Ejecuta pytest y genera el informe XML en la raíz del workspace de GitHub Actions
         pytest --cov=. --cov-report=xml --junitxml=./test-results-a.xml
@@ -31,7 +31,7 @@ jobs:
       uses: codecov/codecov-action@v4
       with:
         # La ruta al archivo coverage.xml generado por pytest en el paso anterior
-        files: ./FLASKPROYECTO/proyecto_a/coverage.xml
+        files: ./proyecto_a/coverage.xml
         token: ${{ secrets.CODECOV_TOKEN }} # Token de Codecov, debe ser un secreto en GitHub
         fail_ci_if_error: true # Opcional: falla la CI si la subida de Codecov falla
         verbose: true # Opcional: muestra logs detallados
