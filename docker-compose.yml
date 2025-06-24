@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  proyecto_a:
+    build: ./proyecto_a
+    container_name: flask-proyecto-a
+    ports:
+      - "8088:5000" # Mapea puerto 8088 de tu máquina al 5000 del contenedor A
+    environment:
+      # Puedes pasar el DSN de Sentry como variable de entorno si prefieres no quemarlo en el código
+      # SENTRY_DSN: "TU_DSN_DE_SENTRY"
+      PYTHONUNBUFFERED: 1 # Para ver los logs de Python en la consola de Docker
+    restart: unless-stopped # Reinicia el contenedor si se detiene inesperadamente
+
+  proyecto_b:
+    build: ./proyecto_b
+    container_name: flask-proyecto-b
+    ports:
+      - "8089:5001" # Mapea puerto 8089 de tu máquina al 5001 del contenedor B
+    environment:
+      # SENTRY_DSN: "TU_DSN_DE_SENTRY"
+      PYTHONUNBUFFERED: 1
+    depends_on:
+      - proyecto_a # Asegura que proyecto_a inicie antes que proyecto_b
+    restart: unless-stopped
